@@ -1,6 +1,7 @@
 package com.flab.skilltrademarket.service;
 
-import com.flab.skilltrademarket.domain.user.dto.UserDto;
+import com.flab.skilltrademarket.domain.user.User;
+import com.flab.skilltrademarket.domain.user.dto.SignupRequest;
 import com.flab.skilltrademarket.global.exception.ApiException;
 import com.flab.skilltrademarket.global.exception.ExceptionCode;
 import com.flab.skilltrademarket.global.security.encryption.PasswordEncoder;
@@ -17,25 +18,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public Boolean checkDuplicateEmail(String email) {
-        return userRepository.existsByEmail(email);
+    private final TermService termService;
+    public void checkDuplicateEmail(String email) {
+        if(userRepository.existsByEmail(email)) {
+            throw new ApiException(ExceptionCode.DUPLICATE_EMAIL);
+        }
     }
 
-    public Boolean checkDuplicateNickName(String nickname) {
-        return userRepository.existsByNickname(nickname);
+    public void checkDuplicateNickName(String nickname) {
+        if (userRepository.existsByNickname(nickname)) {
+            throw new ApiException(ExceptionCode.DUPLICATE_NICKNAME);
+        }
     }
 
     @Transactional
-    public void save(UserDto userDto) {
-        if (checkDuplicateEmail(userDto.email())) {
-            throw new ApiException("이미 존재하는 이메일[%s] 입니다.".formatted(userDto.email()), ExceptionCode.DUPLICATE_EMAIL);
-        }
-        if (checkDuplicateNickName(userDto.nickname())) {
-            throw new ApiException("이미 존재하는 이메일[%s] 입니다.".formatted(userDto.nickname()), ExceptionCode.DUPLICATE_NICKNAME);
-        }
-        String encodedPassword = passwordEncoder.encode(userDto.password());
-        userRepository.save(userDto.toEntity(encodedPassword));
+    public void save(SignupRequest signupRequest) {
+        checkDuplicateEmail(signupRequest.email());
+        checkDuplicateNickName(signupRequest.nickname());
+        String encodedPassword = passwordEncoder.encode(signupRequest.password());
+        User user = userRepository.save(signupRequest.toEntity(encodedPassword));
+        termService.saveSignupTerm(user.getId(), signupRequest.termTypeList());
     }
 
 }
