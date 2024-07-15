@@ -1,7 +1,6 @@
 package com.flab.skilltrademarket.controller;
 
 import com.flab.skilltrademarket.domain.user.dto.SignupRequest;
-import com.flab.skilltrademarket.global.response.CommonResponse;
 import com.flab.skilltrademarket.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +17,9 @@ public class UserController {
      *
      * @param email 이메일
      */
-    @GetMapping("/user/email")
-    public CommonResponse<Void> checkDuplicateEmail(@RequestParam("email") String email) {
+    @GetMapping("/check-email")
+    public void checkDuplicateEmail(@RequestParam("email") String email) {
         userService.checkDuplicateEmail(email);
-        return CommonResponse.success();
     }
 
     /**
@@ -29,10 +27,9 @@ public class UserController {
      *
      * @param nickName 닉네임
      */
-    @GetMapping("/user/nickName")
-    public CommonResponse<Void> checkDuplicateNickName(@RequestParam("nickName") String nickName) {
+    @GetMapping("/check-nickName")
+    public void checkDuplicateNickName(@RequestParam("nickName") String nickName) {
         userService.checkDuplicateNickName(nickName);
-        return CommonResponse.success();
     }
 
     /**
@@ -40,10 +37,9 @@ public class UserController {
      *
      * @param request 회원가입할 entity
      */
-    @PostMapping("/user/signup")
-    public CommonResponse<Void> signUp(@Valid @RequestBody SignupRequest request) {
+    @PostMapping("/signup")
+    public void signUp(@RequestBody SignupRequest request) {
         userService.save(request);
-        return CommonResponse.success();
     }
 
 

@@ -21,23 +21,33 @@ public class UserService {
     private final TermService termService;
     public void checkDuplicateEmail(String email) {
         if(userRepository.existsByEmail(email)) {
-            throw new ApiException(ExceptionCode.DUPLICATE_EMAIL);
+            throw new ApiException(ExceptionCode.DUPLICATE_EMAIL,email);
         }
     }
 
     public void checkDuplicateNickName(String nickname) {
         if (userRepository.existsByNickname(nickname)) {
-            throw new ApiException(ExceptionCode.DUPLICATE_NICKNAME);
+            throw new ApiException(ExceptionCode.DUPLICATE_NICKNAME,log::info);
         }
     }
 
     @Transactional
     public void save(SignupRequest signupRequest) {
-        checkDuplicateEmail(signupRequest.email());
-        checkDuplicateNickName(signupRequest.nickname());
+        saveValidated(signupRequest);
         String encodedPassword = passwordEncoder.encode(signupRequest.password());
         User user = userRepository.save(signupRequest.toEntity(encodedPassword));
         termService.saveSignupTerm(user.getId(), signupRequest.termTypeList());
+    }
+
+    private void saveValidated(SignupRequest signupRequest) {
+        if (signupRequest.email() == null) {
+            throw new ApiException(ExceptionCode.NOT_FOUND_EMAIL);
+        }
+        if (signupRequest.nickname() == null) {
+            throw new ApiException(ExceptionCode.NOT_FOUND_NICKNAME);
+        }
+        checkDuplicateEmail(signupRequest.email());
+        checkDuplicateNickName(signupRequest.nickname());
     }
 
 }
