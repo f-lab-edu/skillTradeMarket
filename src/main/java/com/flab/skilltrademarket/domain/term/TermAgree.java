@@ -13,7 +13,6 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Table
 @NoArgsConstructor(access = PROTECTED)
-@AttributeOverride(name = "id", column = @Column(name = "term_agree_id"))
 public class TermAgree extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -35,10 +34,10 @@ public class TermAgree extends BaseTimeEntity {
         this.userId = userId;
     }
 
-    public static TermAgree of(Long userId, TermHistory termHistory) {
+    public static TermAgree of(Long userId, Term term) {
         return TermAgree.builder()
-                .termType(termHistory.getTermType())
-                .termHistoryId(termHistory.getId())
+                .termType(term.getTermType())
+                .termHistoryId(term.getId())
                 .userId(userId)
                 .build();
     }

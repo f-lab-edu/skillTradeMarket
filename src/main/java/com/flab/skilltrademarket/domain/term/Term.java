@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
+@Entity
 @Getter
-@NoArgsConstructor
 @Table
-@AttributeOverride(name = "id", column = @Column(name = "term_history_id"))
-@Entity(name = "term_history")
-public class TermHistory extends BaseTimeEntity {
+@NoArgsConstructor(access = PROTECTED)
+public class Term extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -35,7 +35,7 @@ public class TermHistory extends BaseTimeEntity {
     private boolean isLatestRevision;
 
     @Builder
-    public TermHistory(TermType termType, LocalDateTime revisionDate, boolean isEssential, boolean isLatestRevision) {
+    public Term(TermType termType, LocalDateTime revisionDate, boolean isEssential, boolean isLatestRevision) {
         this.termType = termType;
         this.revisionDate = revisionDate;
         this.isEssential = isEssential;
