@@ -1,4 +1,4 @@
-package com.flab.skilltrademarket.global.response;
+package com.flab.skilltrademarket.common;
 
 public record CommonResponse<T>(
         String result,
