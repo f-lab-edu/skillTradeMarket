@@ -16,7 +16,9 @@ public enum ExceptionCode {
     DUPLICATE_EMAIL("U011","중복된 이메일[%s]입니다.","사용할 수 없는 이메일입니다.", HttpStatus.BAD_REQUEST),
     DUPLICATE_NICKNAME("U012","중복된 닉네임[%s]입니다.","사용할 수 없는 닉네임입니다.", HttpStatus.BAD_REQUEST),
     INVALID_PW_CONFIRM("U013", "비밀번호가 일치하지 않습니다.", "비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST),
-    NOT_CHECKED_ESSENTIAL_TERM("U014","필수약관에 동의해야합니다.","필수약관에 동의하지 않았습니다.",HttpStatus.BAD_REQUEST);
+    NOT_CHECKED_ESSENTIAL_TERM("U014","필수약관에 동의해야합니다.","필수약관에 동의하지 않았습니다.",HttpStatus.BAD_REQUEST),
+    USER_AUTH_PHONE_NOT_VERIFY("U021","인증을 진행하지 않은 번호입니다.","인증을 진행하지 않은 번호입니다.",HttpStatus.BAD_REQUEST),
+    USER_AUTH_PHONE_CODE_DIFF("U022","인증번호가 일치하지 않습니다.","인증번호가 일치하지 않습니다.",HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String internalMessage;

@@ -1,5 +1,6 @@
 package com.flab.skilltrademarket.service;
 
+import com.flab.skilltrademarket.domain.phone.MapPhoneAuth;
 import com.flab.skilltrademarket.domain.user.User;
 import com.flab.skilltrademarket.domain.user.dto.SignupRequest;
 import com.flab.skilltrademarket.global.exception.ApiException;
@@ -19,6 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TermService termService;
+    private final MapPhoneAuth mapPhoneAuth;
     public void checkDuplicateEmail(String email) {
         if(userRepository.existsByEmail(email)) {
             throw new ApiException(ExceptionCode.DUPLICATE_EMAIL,email);
@@ -35,6 +37,9 @@ public class UserService {
     public void save(SignupRequest signupRequest) {
         saveValidated(signupRequest);
         String encodedPassword = passwordEncoder.encode(signupRequest.password());
+        if(!mapPhoneAuth.isVerifiedCode(signupRequest.phone())){
+            throw new ApiException(ExceptionCode.USER_AUTH_PHONE_NOT_VERIFY);
+        }
         User user = userRepository.save(signupRequest.toEntity(encodedPassword));
         termService.saveSignupTerm(user.getId(), signupRequest.termTypeList());
     }
