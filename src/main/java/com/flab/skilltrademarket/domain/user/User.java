@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
 @Table(name="users")
@@ -23,12 +24,15 @@ public class User extends BaseTimeEntity {
     private String email;
     private String password;
     private String phone;
+    @Enumerated(STRING)
+    private UserRole userRole;
 
     @Builder
-    public User(String nickname, String email, String password, String phone) {
-        this.nickname = nickname;
+    public User(String email, String nickname, String password, String phone) {
         this.email = email;
+        this.nickname = nickname;
         this.password = password;
         this.phone = phone;
+        this.userRole = UserRole.USER;
     }
 }
