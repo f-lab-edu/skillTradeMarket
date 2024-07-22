@@ -2,7 +2,6 @@ package com.flab.skilltrademarket.controller;
 
 import com.flab.skilltrademarket.domain.user.dto.SignupRequest;
 import com.flab.skilltrademarket.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
