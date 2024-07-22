@@ -1,8 +1,10 @@
 package com.flab.skilltrademarket.domain.phone;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Data
 public class PhoneAuthEntity {
         private int code;
         private boolean verification;
@@ -21,6 +23,6 @@ public class PhoneAuthEntity {
         }
 
         public boolean isVerification() {
-            return verification;
+            return this.verification;
         }
 }
