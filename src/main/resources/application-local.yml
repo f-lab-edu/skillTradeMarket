@@ -15,6 +15,11 @@ spring:
       ddl-auto: create
 
 
+jwt:
+  secret: 7IK87Kmc7IK8sdfOuwseyXlOuTnCDsl5Tsp4Dri4jsdfsrQg7LGE7JqpIOqzvOygnCBKV1Qg67mE67CAIO2CpA==
+  access-token-validate-in-seconds: 3600
+  refresh-token-validate-in-seconds: 86400
+
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
