@@ -18,13 +18,13 @@ public class PhoneAuthController {
 
     private final RedisPhoneAuth redisPhoneAuth;
 
-    @PostMapping("/phone-verification")
+    @PostMapping("/stm/phone-verification")
     public CommonResponse<PhoneAuthResponse> verifyPhone(@RequestBody PhoneVerifyRequest phoneVerifyRequest) {
         int verifyCode = redisPhoneAuth.issueVerificationCode(phoneVerifyRequest.phoneNum());
         return CommonResponse.success(PhoneAuthResponse.from(verifyCode));
     }
 
-    @PostMapping("/phone-confirm")
+    @PostMapping("/stm/phone-confirm")
     public void confirmPhone(@RequestBody PhoneConfirmRequest phoneConfirmRequest) {
         boolean isConfirmed = redisPhoneAuth.confirmPhoneAuthCode(phoneConfirmRequest.phoneNum(), phoneConfirmRequest.code());
         if (!isConfirmed) {

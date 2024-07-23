@@ -16,7 +16,7 @@ public class UserController {
      *
      * @param email 이메일
      */
-    @GetMapping("/check-email")
+    @GetMapping("stm/check-email")
     public void checkDuplicateEmail(@RequestParam("email") String email) {
         userService.checkDuplicateEmail(email);
     }
@@ -26,7 +26,7 @@ public class UserController {
      *
      * @param nickName 닉네임
      */
-    @GetMapping("/check-nickName")
+    @GetMapping("stm/check-nickName")
     public void checkDuplicateNickName(@RequestParam("nickName") String nickName) {
         userService.checkDuplicateNickName(nickName);
     }
@@ -36,7 +36,7 @@ public class UserController {
      *
      * @param request 회원가입할 entity
      */
-    @PostMapping("/signup")
+    @PostMapping("stm/signup")
     public void signUp(@RequestBody SignupRequest request) {
         userService.save(request);
     }
