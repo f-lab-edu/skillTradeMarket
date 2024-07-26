@@ -1,6 +1,7 @@
 package com.flab.skilltrademarket.service;
 
 import com.flab.skilltrademarket.domain.user.dto.LoginRequest;
+import com.flab.skilltrademarket.domain.user.dto.ReissueRequest;
 import com.flab.skilltrademarket.domain.user.dto.UserInfo;
 import com.flab.skilltrademarket.domain.user.response.TokenResponse;
 import com.flab.skilltrademarket.global.security.encryption.PasswordEncoder;
@@ -20,4 +21,8 @@ public class LoginService {
         return TokenResponse.of(token);
     }
 
+    public TokenResponse reissue(ReissueRequest reissueRequest) {
+        Token token = securityService.reissueToken(reissueRequest.refreshToken());
+        return TokenResponse.of(token);
+    }
 }

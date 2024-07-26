@@ -25,7 +25,9 @@ public enum ExceptionCode {
     //
     COMMON_SYSTEM_ERROR("C001","시스템 에러입니다.","시스템 에러입니다.",HttpStatus.BAD_REQUEST),
     ACCESS_DENIED("C002","인증이 필요합니다.","인증이 필요합니다.", HttpStatus.UNAUTHORIZED),
-    EXPIRED_TOKEN("C003","만료된 토큰 입니다.","만료된 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+    EXPIRED_TOKEN("C003","만료된 토큰 입니다.","만료된 토큰 입니다.", HttpStatus.UNAUTHORIZED),
+    INVALID_TOKEN("C004","유효하지 않은 토큰 입니다.","유효하지 않은 토큰 입니다.", HttpStatus.UNAUTHORIZED);
+
     private final String code;
     private final String internalMessage;
     private final String externalMessage;

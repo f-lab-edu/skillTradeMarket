@@ -45,10 +45,13 @@ public class JwtProvider implements TokenProvider{
             throw new ApiException(ExceptionCode.COMMON_SYSTEM_ERROR);
         }
         String accessToken = createAccessToken(username);
-        String refreshToken = createRefreshToken();
+        String refreshToken = createRefreshToken(username);
         return new Token(accessToken, this.accessTokenExpiredTime, refreshToken);
     }
-
+    @Override
+    public Long getRefreshTokenExpiredTime() {
+        return this.refreshTokenExpiredTime * MILLISECONDS_TO_SECONDS;
+    }
 
     /**
      * JWT 토큰에서 사용자 이름 추출
@@ -103,13 +106,14 @@ public class JwtProvider implements TokenProvider{
      *
      * @return 생성된 리프레시 토큰 문자열
      */
-    private String createRefreshToken() {
+    private String createRefreshToken(String username) {
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + this.refreshTokenExpiredTime * MILLISECONDS_TO_SECONDS);
 
         return Jwts.builder()
                 .issuedAt(now)
                 .expiration(expireDate)
+                .claim(TOKEN_CLAIM_KEY, username)
                 .signWith(this.secretKey)
                 .compact();
     }

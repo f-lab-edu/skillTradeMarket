@@ -1,6 +1,7 @@
 package com.flab.skilltrademarket.controller;
 
 import com.flab.skilltrademarket.domain.user.dto.LoginRequest;
+import com.flab.skilltrademarket.domain.user.dto.ReissueRequest;
 import com.flab.skilltrademarket.domain.user.response.TokenResponse;
 import com.flab.skilltrademarket.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -17,4 +18,12 @@ public class LoginController {
     TokenResponse login(@RequestBody LoginRequest loginRequest) {
         return loginService.login(loginRequest);
     }
+
+    @PostMapping("/stm/reissue")
+    TokenResponse reissue(@RequestBody ReissueRequest reissueRequest) {
+        return loginService.reissue(reissueRequest);
+    }
+
+
+
 }

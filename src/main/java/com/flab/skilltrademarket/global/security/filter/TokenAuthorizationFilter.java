@@ -37,7 +37,8 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
             "/stm/check-email",
             "/stm/phone-confirm",
             "/stm/phone-verification",
-            "/stm/login"
+            "/stm/login",
+            "/stm/reissue"
     );
     private static final String GRANT_TYPE = "Bearer ";
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
