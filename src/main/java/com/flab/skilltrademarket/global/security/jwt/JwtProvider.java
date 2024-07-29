@@ -53,6 +53,7 @@ public class JwtProvider implements TokenProvider{
         return this.refreshTokenExpiredTime * MILLISECONDS_TO_SECONDS;
     }
 
+
     /**
      * JWT 토큰에서 사용자 이름 추출
      *

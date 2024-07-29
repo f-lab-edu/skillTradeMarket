@@ -1,6 +1,7 @@
 package com.flab.skilltrademarket.controller;
 
 import com.flab.skilltrademarket.domain.user.dto.LoginRequest;
+import com.flab.skilltrademarket.domain.user.dto.LogoutRequest;
 import com.flab.skilltrademarket.domain.user.dto.ReissueRequest;
 import com.flab.skilltrademarket.domain.user.response.TokenResponse;
 import com.flab.skilltrademarket.service.LoginService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-public class LoginController {
+public class AuthController {
     private final LoginService loginService;
 
     @PostMapping("/stm/login")
@@ -24,6 +25,10 @@ public class LoginController {
         return loginService.reissue(reissueRequest);
     }
 
+    @PostMapping("/stm/logout")
+    public void logout(@RequestBody LogoutRequest logoutRequest) {
+        loginService.logout(logoutRequest);
+    }
 
 
 }
