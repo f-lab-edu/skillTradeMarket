@@ -46,4 +46,16 @@ public class SecurityService {
         }
 
     }
+
+    public void logout(String accessToken) {
+        String username = tokenProvider.getClaimUsername(accessToken);
+
+        redisService.get(TOKEN_PREFIX + username, String.class)
+                .orElseThrow(() -> new ApiException(ExceptionCode.ACCESS_DENIED));
+
+        redisService.delete(TOKEN_PREFIX+username);
+
+        Long expiration = tokenProvider.getRefreshTokenExpiredTime();
+        redisService.set(accessToken, "logout", expiration);
+    }
 }
