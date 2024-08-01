@@ -1,4 +1,4 @@
-package com.flab.skilltrademarket.domain.skill;
+package com.flab.skilltrademarket.domain.category;
 
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -15,7 +15,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class MainSkill extends BaseTimeEntity {
+public class Category extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -27,14 +27,14 @@ public class MainSkill extends BaseTimeEntity {
 
 
     @Builder
-    public MainSkill(String name, String description) {
+    public Category(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public void update(MainSkill mainSkill) {
-        this.name = mainSkill.getName();
-        this.description = mainSkill.getDescription();
+    public void update(Category category) {
+        this.name = category.getName();
+        this.description = category.getDescription();
     }
 
 }

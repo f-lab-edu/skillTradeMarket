@@ -1,4 +1,4 @@
-package com.flab.skilltrademarket.domain.skill;
+package com.flab.skilltrademarket.domain.category;
 
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -12,23 +12,23 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class SubSkill extends BaseTimeEntity {
+public class SubCategory extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "main_skill_id")
+    @JoinColumn(name = "category_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private MainSkill mainSkill;
+    private Category category;
 
     private String name;
 
     private String description;
 
     @Builder
-    public SubSkill(MainSkill mainSkill, String name, String description) {
-        this.mainSkill = mainSkill;
+    public SubCategory(Category category, String name, String description) {
+        this.category = category;
         this.name = name;
         this.description = description;
     }
