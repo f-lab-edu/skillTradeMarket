@@ -4,9 +4,8 @@ import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import com.flab.skilltrademarket.domain.expert.Expert;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -14,7 +13,8 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class Skill extends BaseTimeEntity {
+@Getter
+public class ExpertSkill extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -25,10 +25,5 @@ public class Skill extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "expert_id")
     private Expert expert;
-
-
-    private String name;
-    private String description;
-
 
 }
