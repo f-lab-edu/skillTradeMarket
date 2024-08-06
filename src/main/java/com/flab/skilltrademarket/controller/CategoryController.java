@@ -22,8 +22,7 @@ public class CategoryController {
 
     @GetMapping("/stm/{id}")
     CommonResponse<CategoryResponse> findOne(@PathVariable("id") Long id) {
-        CategoryResponse skillResponse = categoryService.findOneById(id);
-        return CommonResponse.success(skillResponse);
+        return CommonResponse.success(categoryService.findOneById(id));
     }
 
     @GetMapping("/stm")
