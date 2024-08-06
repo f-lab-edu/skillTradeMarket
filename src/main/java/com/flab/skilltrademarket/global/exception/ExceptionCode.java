@@ -28,10 +28,11 @@ public enum ExceptionCode {
     EXPIRED_TOKEN("C003","만료된 토큰 입니다.","만료된 토큰 입니다.", HttpStatus.UNAUTHORIZED),
     INVALID_TOKEN("C004","유효하지 않은 토큰 입니다.","유효하지 않은 토큰 입니다.", HttpStatus.UNAUTHORIZED),
 
-    // Skill
-    DUP_SKILL_NAME("D001","중복된 스킬명[%s]입니다.","중복된 스킬명입니다.",HttpStatus.BAD_REQUEST),
-    NOT_FOUND_SKILL("D002","해당 스킬을 찾을 수 없습니다.","해당 스킬을 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
-    DUP_SUB_SKILL_NAME("D003","중복된 하위 스킬명[%s] 입니다.","중복된 하위 스킬명[%s] 입니다.",HttpStatus.BAD_REQUEST);
+    // Category
+    DUP_CAT_NAME("D001","중복된 카테고리명[%s]입니다.","중복된 스킬명입니다.",HttpStatus.BAD_REQUEST),
+    NOT_FOUND_CAT("D002","해당 카테고리를 찾을 수 없습니다.","해당 카테고리를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
+    NOT_FOUND_SUB_CAT("D003","해당 하위 카테고리를 찾을 수 없습니다.","해당 하위 카테고리를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
+    DUP_SUB_CAT_NAME("D004","중복된 하위 카테고리명[%s] 입니다.","중복된 하위 카테고리명 입니다.",HttpStatus.BAD_REQUEST);
     private final String code;
     private final String internalMessage;
     private final String externalMessage;

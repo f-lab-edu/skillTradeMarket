@@ -31,7 +31,7 @@ public class CategoryService {
 
 
     public CategoryResponse findOneById(Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_SKILL));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_CAT));
         return CategoryResponse.from(category);
     }
 
@@ -45,7 +45,7 @@ public class CategoryService {
     @Transactional
     public CategoryResponse update(Long id, CategoryUpdateRequest updateRequest) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_SKILL));
+                .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_CAT));
 
         checkDupName(updateRequest.name());
         Category updateCategory = CategoryUpdateRequest.toEntity(updateRequest);
@@ -56,14 +56,14 @@ public class CategoryService {
 
     public void delete(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_SKILL));
+                .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_CAT));
 
         categoryRepository.delete(category);
     }
 
     private void checkDupName(String name) {
         if (categoryRepository.existsByName(name)) {
-            throw new ApiException(ExceptionCode.DUP_SKILL_NAME, name);
+            throw new ApiException(ExceptionCode.DUP_CAT_NAME, name);
         }
     }
 }
