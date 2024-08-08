@@ -1,34 +1,40 @@
-package com.flab.skilltrademarket.domain.skill;
+package com.flab.skilltrademarket.domain.review;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class Skill extends BaseTimeEntity {
+@Getter
+public class Review extends BaseTimeEntity {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "sub_category_id")
-    private SubCategory subCategory;
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expert_id")
     private Expert expert;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
+    private User writer;
 
-    private String name;
-    private String description;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sub_category_id")
+    private SubCategory subCategory;
+
+    private String content;
+
+    private double rating;
+
 
 
 }

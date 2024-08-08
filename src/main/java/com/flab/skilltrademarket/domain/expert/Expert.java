@@ -1,8 +1,10 @@
 package com.flab.skilltrademarket.domain.expert;
 
-import com.flab.skilltrademarket.domain.skill.Skill;
+import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
+import com.flab.skilltrademarket.domain.skill.ExpertSkill;
 import com.flab.skilltrademarket.domain.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -15,7 +17,8 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class Expert {
+@Getter
+public class Expert extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -25,7 +28,10 @@ public class Expert {
     private User user;
 
     @OneToMany(mappedBy = "expert", cascade = ALL, orphanRemoval = true)
-    private List<Skill> skills = new ArrayList<>();
+    private List<ExpertSkill> expertSkills = new ArrayList<>();
 
+    private String storeName;
+
+    private double rating;
 
 }

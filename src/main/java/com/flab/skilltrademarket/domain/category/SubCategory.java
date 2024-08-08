@@ -3,7 +3,9 @@ package com.flab.skilltrademarket.domain.category;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,6 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
+@Getter
 public class SubCategory extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -25,7 +28,9 @@ public class SubCategory extends BaseTimeEntity {
     private String name;
 
     private String description;
-
+    @ColumnDefault("0")
+    private Integer requestCount;
+    private String imageUrl;
     @Builder
     public SubCategory(Category category, String name, String description) {
         this.category = category;
