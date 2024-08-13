@@ -70,6 +70,6 @@ public class UserService implements UserDetailsService {
     public UserDetails loadByUsername(String username) {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
-        return new UserDetails(user.getId(), user.getEmail(), user.getNickname());
+        return new UserDetails(user.getId(), user.getEmail(), user.getNickname(),user.getUserRole());
     }
 }

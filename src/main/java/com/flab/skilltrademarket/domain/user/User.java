@@ -35,4 +35,12 @@ public class User extends BaseTimeEntity {
         this.phone = phone;
         this.userRole = UserRole.USER;
     }
+
+    public void changeRole() {
+        if (userRole.equals(UserRole.USER)) {
+            userRole = UserRole.EXPERT;
+        } else if (userRole.equals(UserRole.EXPERT)) {
+            userRole = UserRole.USER;
+        }
+    }
 }
