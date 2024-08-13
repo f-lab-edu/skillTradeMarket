@@ -29,10 +29,16 @@ public enum ExceptionCode {
     INVALID_TOKEN("C004","유효하지 않은 토큰 입니다.","유효하지 않은 토큰 입니다.", HttpStatus.UNAUTHORIZED),
 
     // Category
-    DUP_CAT_NAME("D001","중복된 카테고리명[%s]입니다.","중복된 스킬명입니다.",HttpStatus.BAD_REQUEST),
+    DUP_CAT_NAME("D001","중복된 카테고리명[%s]입니다.","중복된 카테고리명 입니다..",HttpStatus.BAD_REQUEST),
     NOT_FOUND_CAT("D002","해당 카테고리를 찾을 수 없습니다.","해당 카테고리를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
     NOT_FOUND_SUB_CAT("D003","해당 하위 카테고리를 찾을 수 없습니다.","해당 하위 카테고리를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
-    DUP_SUB_CAT_NAME("D004","중복된 하위 카테고리명[%s] 입니다.","중복된 하위 카테고리명 입니다.",HttpStatus.BAD_REQUEST);
+    DUP_SUB_CAT_NAME("D004","중복된 하위 카테고리명[%s] 입니다.","중복된 하위 카테고리명 입니다.",HttpStatus.BAD_REQUEST),
+
+    //Expert
+    NOT_FOUND_EXPERT("E001","존재하지 않는 고수입니다.","존재하지 않는 고수입니다.",HttpStatus.NOT_FOUND),
+    DUP_STORE_NAME("E002", "중복된 상점명[%s]입니다.", "중복된 상점명입니다.", HttpStatus.BAD_REQUEST),
+    NO_ACCESS_EXPERT("E003", "일반 사용자는 접근할 수 없습니다.", "일반 사용자는 접근할 수 없습니다.", HttpStatus.BAD_REQUEST),
+    NOT_FOUND_EXPERT_SKILL("E004", "존재하지 않는 스킬입니다.", "존재하지 않는 스킬입니다.", HttpStatus.NOT_FOUND);
     private final String code;
     private final String internalMessage;
     private final String externalMessage;

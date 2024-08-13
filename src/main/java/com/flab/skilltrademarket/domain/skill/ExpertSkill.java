@@ -3,7 +3,9 @@ package com.flab.skilltrademarket.domain.skill;
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.expert.dto.request.ExpertAddSubCatRequest;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +28,13 @@ public class ExpertSkill extends BaseTimeEntity {
     @JoinColumn(name = "expert_id")
     private Expert expert;
 
+    @Builder
+    public ExpertSkill(Expert expert, SubCategory subCategory) {
+        this.expert = expert;
+        this.subCategory = subCategory;
+    }
+
+    public void addExpert(Expert expert) {
+        this.expert = expert;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
     boolean existsByName(String name);
@@ -14,4 +15,6 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> 
     Slice<SubCategory> findAllByCategoryName(String name, Pageable pageable);
     @Query(value = "select * from sub_category sc order by sc.REQUEST_COUNT desc limit 10",nativeQuery = true)
     List<SubCategory> findTop10ByRequestCount();
+
+    Optional<SubCategory> findByName(String name);
 }
