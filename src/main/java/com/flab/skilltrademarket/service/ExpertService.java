@@ -33,20 +33,22 @@ public class ExpertService {
     private final ExpertSkillRepository expertSkillRepository;
     @Transactional
     public void create(UserDetails user, ExpertCreateRequest expertCreateRequest) {
-        User userId = userRepository.findById(user.id()).orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
-        if(user.role().equals(UserRole.EXPERT)){
-            checkDupStoreName(expertCreateRequest.storeName());
-            Expert expert = expertCreateRequest.toEntity(userId);
-            expertRepository.save(expert);
-        }else{
+        User users = userRepository.findById(user.id())
+                .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
+
+        if (!users.getUserRole().isExpert()) {
             throw new ApiException(ExceptionCode.NO_ACCESS_EXPERT);
         }
+            checkDupStoreName(expertCreateRequest.storeName());
+            Expert expert = expertCreateRequest.toEntity(users);
+            expertRepository.save(expert);
     }
 
 
     @Transactional
     public void update(UserDetails user, ExpertUpdateRequest expertUpdateRequest) {
         Expert expert = expertRepository.findByUserId(user.id())
+
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_EXPERT));
         checkDupStoreName(expertUpdateRequest.storeName());
         Expert update = ExpertUpdateRequest.update(expertUpdateRequest);
@@ -57,9 +59,9 @@ public class ExpertService {
 
     public ExpertResponse findById(Long id) {
 
-        Expert expert = expertRepository.findById(id)
+        return expertRepository.findById(id)
+                .map(ExpertResponse::from)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_EXPERT));
-        return ExpertResponse.from(expert);
     }
     @Transactional
     public void delete(UserDetails user) {

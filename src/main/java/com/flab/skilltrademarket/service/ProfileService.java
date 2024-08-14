@@ -18,16 +18,19 @@ public class ProfileService {
 
 
     public ProfileResponse getUserProfile(Long id) {
-        User user = userRepository.findById(id)
+        return userRepository.findById(id)
+                .map(ProfileResponse::from)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
-        return ProfileResponse.from(user);
+
     }
 
 
     public void changeRole(Long id) {
-        User user = userRepository.findById(id)
+        userRepository.findById(id)
+                .map(user -> {
+                    user.changeRole();
+                    return userRepository.save(user);
+                })
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
-        user.changeRole();
-        userRepository.save(user);
     }
 }
