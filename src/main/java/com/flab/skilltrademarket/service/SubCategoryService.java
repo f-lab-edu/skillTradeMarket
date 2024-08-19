@@ -44,19 +44,18 @@ public class SubCategoryService {
     }
 
     public SubCategoryResponse findById(Long id) {
-        SubCategory subCategory = subCategoryRepository.findById(id)
+        return subCategoryRepository.findById(id)
+                .map(SubCategoryResponse::from)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_SUB_CAT));
-        return SubCategoryResponse.from(subCategory);
+
     }
 
     public SubCategoryListResponse findAll() {
-        List<SubCategory> subCategoryList = subCategoryRepository.findAll();
-        return SubCategoryListResponse.from(subCategoryList);
+        return SubCategoryListResponse.from(subCategoryRepository.findAll());
     }
 
     public SubCategorySliceListResponse findAllByMainCategory(String categoryName, Pageable pageable) {
-        Slice<SubCategory> subCategories = subCategoryRepository.findAllByCategoryName(categoryName, pageable);
-        return SubCategorySliceListResponse.from(subCategories);
+        return SubCategorySliceListResponse.from(subCategoryRepository.findAllByCategoryName(categoryName, pageable));
     }
 
 }

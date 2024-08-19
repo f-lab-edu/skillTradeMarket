@@ -31,8 +31,9 @@ public class CategoryService {
 
 
     public CategoryResponse findOneById(Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_CAT));
-        return CategoryResponse.from(category);
+        return categoryRepository.findById(id)
+                .map(CategoryResponse::from)
+                .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_CAT));
     }
 
 
@@ -44,14 +45,13 @@ public class CategoryService {
 
     @Transactional
     public CategoryResponse update(Long id, CategoryUpdateRequest updateRequest) {
-        Category category = categoryRepository.findById(id)
+        return categoryRepository.findById(id)
+                .map(category -> {
+                    checkDupName(updateRequest.name());
+                    category.update(CategoryUpdateRequest.toEntity(updateRequest));
+                    return CategoryResponse.from(category);
+                })
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_CAT));
-
-        checkDupName(updateRequest.name());
-        Category updateCategory = CategoryUpdateRequest.toEntity(updateRequest);
-        category.update(updateCategory);
-
-        return CategoryResponse.from(category);
     }
 
     public void delete(Long id) {
