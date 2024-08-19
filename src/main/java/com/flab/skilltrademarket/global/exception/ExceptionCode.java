@@ -38,7 +38,12 @@ public enum ExceptionCode {
     NOT_FOUND_EXPERT("E001","존재하지 않는 고수입니다.","존재하지 않는 고수입니다.",HttpStatus.NOT_FOUND),
     DUP_STORE_NAME("E002", "중복된 상점명[%s]입니다.", "중복된 상점명입니다.", HttpStatus.BAD_REQUEST),
     NO_ACCESS_EXPERT("E003", "일반 사용자는 접근할 수 없습니다.", "일반 사용자는 접근할 수 없습니다.", HttpStatus.BAD_REQUEST),
-    NOT_FOUND_EXPERT_SKILL("E004", "존재하지 않는 스킬입니다.", "존재하지 않는 스킬입니다.", HttpStatus.NOT_FOUND);
+    NOT_FOUND_EXPERT_SKILL("E004", "존재하지 않는 스킬입니다.", "존재하지 않는 스킬입니다.", HttpStatus.NOT_FOUND),
+    VALIDATE_STORE_NAME("E005","스토어이름 형식이 맞지 않습니다.","잘못된 형식입니다.",HttpStatus.BAD_REQUEST),
+
+    //Review
+    NOT_FOUND_REVIEW("F001", "존재하지 않는 리뷰입니다.", "존재하지 않는 리뷰입니다.", HttpStatus.NOT_FOUND);
+
     private final String code;
     private final String internalMessage;
     private final String externalMessage;
