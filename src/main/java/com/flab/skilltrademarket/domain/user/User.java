@@ -35,4 +35,8 @@ public class User extends BaseTimeEntity {
         this.phone = phone;
         this.userRole = UserRole.USER;
     }
+
+    public void changeRole() {
+        userRole = userRole.getChangeRole().get();
+    }
 }

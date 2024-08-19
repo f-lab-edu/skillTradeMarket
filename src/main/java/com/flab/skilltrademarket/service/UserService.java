@@ -60,16 +60,16 @@ public class UserService implements UserDetailsService {
         checkDuplicateNickName(signupRequest.nickname());
     }
     public UserInfo getLoginUser(String email, String encodedPassword) {
-        User user = userRepository.findByEmailAndPassword(email, encodedPassword)
+        return userRepository.findByEmailAndPassword(email, encodedPassword)
+                .map(UserInfo::of)
                 .orElseThrow(() -> new ApiException(ExceptionCode.LOGIN_FAIL));
 
-        return UserInfo.of(user);
     }
 
     @Override
     public UserDetails loadByUsername(String username) {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
-        return new UserDetails(user.getId(), user.getEmail(), user.getNickname());
+        return new UserDetails(user.getId(), user.getEmail(), user.getNickname(),user.getUserRole());
     }
 }
