@@ -40,15 +40,17 @@ public class Expert extends BaseTimeEntity {
     private String location;
 
     private double rating;
+    private int reviewCount;
 
     @Builder
-    public Expert(User user, String storeName, String description, int maxDistance, String location, double rating) {
+    public Expert(User user, String storeName, String description, int maxDistance, String location, double rating, int reviewCount) {
         this.user = user;
         this.storeName = storeName;
         this.description = description;
         this.maxDistance = maxDistance;
         this.location = location;
         this.rating = rating;
+        this.reviewCount = reviewCount;
     }
 
     public void update(Expert expert) {
@@ -57,6 +59,7 @@ public class Expert extends BaseTimeEntity {
         this.maxDistance = expert.getMaxDistance();
         this.location = expert.getLocation();
         this.rating = expert.getRating();
+        this.reviewCount = expert.getReviewCount();
     }
 
     public void addExpertSkill(ExpertSkill skill) {
@@ -67,4 +70,35 @@ public class Expert extends BaseTimeEntity {
     public void deleteExpertSkill(ExpertSkill skill) {
         this.getExpertSkills().remove(skill);
     }
+
+    public void addRating(double newRating) {
+        validateRating(newRating);
+
+        // 기존 리뷰 개수에 새로운 평균 계산
+        this.rating = calculateNewRating(this.rating, newRating, this.reviewCount);
+
+        // 리뷰 개수를 증가
+        this.reviewCount++;
+    }
+
+    private void validateRating(double rating) {
+        if (rating < 0 || rating > 5) {
+            throw new IllegalArgumentException("Rating must be between 0 and 5");
+        }
+    }
+
+    private double calculateNewRating(double currentRating, double newRating, int currentReviewCount) {
+        if (currentReviewCount <= 0) {
+            return roundToNearestTenth(newRating);
+        }
+
+        // 새로운 평점을 계산
+        double updatedRating = (currentRating * currentReviewCount + newRating) / (currentReviewCount + 1);
+        return roundToNearestTenth(updatedRating);
+    }
+
+    private double roundToNearestTenth(double value) {
+        return Math.round(value * 10) / 10.0;
+    }
+
 }
