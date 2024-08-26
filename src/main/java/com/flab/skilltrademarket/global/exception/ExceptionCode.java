@@ -42,8 +42,13 @@ public enum ExceptionCode {
     VALIDATE_STORE_NAME("E005","스토어이름 형식이 맞지 않습니다.","잘못된 형식입니다.",HttpStatus.BAD_REQUEST),
 
     //Review
-    NOT_FOUND_REVIEW("F001", "존재하지 않는 리뷰입니다.", "존재하지 않는 리뷰입니다.", HttpStatus.NOT_FOUND);
+    NOT_FOUND_REVIEW("F001", "존재하지 않는 리뷰입니다.", "존재하지 않는 리뷰입니다.", HttpStatus.NOT_FOUND),
+    VALIDATE_RATING("F002","별점은 1~5만 입력 가능합니다.","별점은 1~5만 입력 가능합니다.",HttpStatus.BAD_REQUEST),
+    UNSUPPORTED_REPLIER("F003", "리뷰에 대한 답장은 고수만 가능합니다.", "리뷰에 대한 답장은 고수만 가능합니다.", HttpStatus.BAD_REQUEST),
 
+    //Estimate
+    NOT_FOUND_USER_ESTIMATE("G001","찾을 수 없는 요청 견적서입니다.","찾을 수 없는 요청 견적서입니다.",HttpStatus.NOT_FOUND),
+    COST_MUST_OVER_ZERO("G002", "비용은 0원보다 커야합니다.", "비용은 0원보다 커야합니다.", HttpStatus.BAD_REQUEST);
     private final String code;
     private final String internalMessage;
     private final String externalMessage;

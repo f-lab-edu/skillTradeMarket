@@ -2,7 +2,7 @@ package com.flab.skilltrademarket.service;
 
 import com.flab.skilltrademarket.domain.HomeResponse;
 import com.flab.skilltrademarket.domain.category.SubCategory;
-import com.flab.skilltrademarket.domain.expert.dto.response.PopularExpertResponse;
+import com.flab.skilltrademarket.domain.store.dto.response.PopularStoreResponse;
 import com.flab.skilltrademarket.domain.review.Review;
 import com.flab.skilltrademarket.domain.skill.dto.response.PopularSkillResponse;
 import com.flab.skilltrademarket.repository.ReviewRepository;
@@ -22,7 +22,7 @@ public class HomeService {
     @Transactional(readOnly = true)
     public HomeResponse getHome() {
         List<PopularSkillResponse> topTenSkill = getTopTenSkill(subCategoryRepository.findTop10ByRequestCount());
-        List<PopularExpertResponse> topTwoExpert = getTopTwoExpert(reviewRepository.findTop2ByRating());
+        List<PopularStoreResponse> topTwoExpert = getTopTwoExpert(reviewRepository.findTop2ByRating());
         return new HomeResponse(topTenSkill, topTwoExpert);
     }
 
@@ -32,9 +32,9 @@ public class HomeService {
                 .collect(Collectors.toList());
     }
 
-    private List<PopularExpertResponse> getTopTwoExpert(List<Review> reviews) {
+    private List<PopularStoreResponse> getTopTwoExpert(List<Review> reviews) {
         return reviews.stream()
-                .map(review -> PopularExpertResponse.fromEntity(review))
+                .map(review -> PopularStoreResponse.fromEntity(review))
                 .collect(Collectors.toList());
     }
 }

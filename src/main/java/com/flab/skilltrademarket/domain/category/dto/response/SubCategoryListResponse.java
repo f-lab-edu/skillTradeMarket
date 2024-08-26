@@ -1,7 +1,7 @@
 package com.flab.skilltrademarket.domain.category.dto.response;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.domain.skill.ExpertSkill;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public record SubCategoryListResponse(
                 .toList());
     }
 
-    public static SubCategoryListResponse from(Expert expert) {
-        List<SubCategory> subCategories = expert.getExpertSkills().stream()
+    public static SubCategoryListResponse from(Store store) {
+        List<SubCategory> subCategories = store.getExpertSkills().stream()
                 .map(ExpertSkill::getSubCategory)
                 .collect(Collectors.toList());
 
