@@ -2,12 +2,11 @@ package com.flab.skilltrademarket.domain.estimate;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.domain.user.User;
 import com.flab.skilltrademarket.global.exception.ApiException;
 import com.flab.skilltrademarket.global.exception.ExceptionCode;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,7 +44,7 @@ public class UserEstimate extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expert_id")
-    private Expert expert;
+    private Store store;
 
     @Builder
     public UserEstimate(User user, SubCategory subCategory, String location, String detailedDescription,LocalDateTime strDate) {

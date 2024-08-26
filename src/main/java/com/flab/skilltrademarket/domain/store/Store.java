@@ -1,4 +1,4 @@
-package com.flab.skilltrademarket.domain.expert;
+package com.flab.skilltrademarket.domain.store;
 
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import com.flab.skilltrademarket.domain.skill.ExpertSkill;
@@ -19,16 +19,17 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class Expert extends BaseTimeEntity {
+public class Store extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
     @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "expert", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "store", cascade = ALL, orphanRemoval = true)
     private List<ExpertSkill> expertSkills = new ArrayList<>();
 
     private String storeName;
@@ -43,7 +44,7 @@ public class Expert extends BaseTimeEntity {
     private int reviewCount;
 
     @Builder
-    public Expert(User user, String storeName, String description, int maxDistance, String location, double rating, int reviewCount) {
+    public Store(User user, String storeName, String description, int maxDistance, String location, double rating, int reviewCount) {
         this.user = user;
         this.storeName = storeName;
         this.description = description;
@@ -53,13 +54,13 @@ public class Expert extends BaseTimeEntity {
         this.reviewCount = reviewCount;
     }
 
-    public void update(Expert expert) {
-        this.storeName = expert.getStoreName();
-        this.description = expert.getDescription();
-        this.maxDistance = expert.getMaxDistance();
-        this.location = expert.getLocation();
-        this.rating = expert.getRating();
-        this.reviewCount = expert.getReviewCount();
+    public void update(Store store) {
+        this.storeName = store.getStoreName();
+        this.description = store.getDescription();
+        this.maxDistance = store.getMaxDistance();
+        this.location = store.getLocation();
+        this.rating = store.getRating();
+        this.reviewCount = store.getReviewCount();
     }
 
     public void addExpertSkill(ExpertSkill skill) {
@@ -71,7 +72,7 @@ public class Expert extends BaseTimeEntity {
         this.getExpertSkills().remove(skill);
     }
 
-    public void addRating(double newRating) {
+    public void calculateRating(double newRating) {
         validateRating(newRating);
 
         // 기존 리뷰 개수에 새로운 평균 계산

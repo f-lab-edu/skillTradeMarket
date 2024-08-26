@@ -1,7 +1,7 @@
 package com.flab.skilltrademarket.service;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.domain.reply.Reply;
 import com.flab.skilltrademarket.domain.reply.dto.request.ReplyCreateRequest;
 import com.flab.skilltrademarket.domain.review.Review;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
     private final UserRepository userRepository;
     private final SubCategoryRepository subCategoryRepository;
-    private final ExpertRepository expertRepository;
+    private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
     private final ReplyRepository replyRepository;
     @Transactional
@@ -32,15 +32,15 @@ public class ReviewService {
         User writer = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
 
-        Expert expert = expertRepository.findById(expertId)
+        Store store = storeRepository.findById(expertId)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_EXPERT));
 
         SubCategory subCategory = subCategoryRepository.findById(subCategoryId)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_SUB_CAT));
 
-        expert.addRating(request.rating());
+        store.calculateRating(request.rating());
 
-        Review review = ReviewCreateRequest.toEntity(request, writer, expert, subCategory);
+        Review review = ReviewCreateRequest.toEntity(request, writer, store, subCategory);
         reviewRepository.save(review);
     }
 
@@ -49,8 +49,8 @@ public class ReviewService {
     }
 
 
-    public ReviewListResponse findReviewByExpertAndSubCategory(Long expertId, Long subCategoryId, Pageable pageable) {
-        Slice<Review> reviews = reviewRepository.findAllByExpertIdAndSubCategoryIdOrderByCreatedAt(expertId, subCategoryId, pageable);
+    public ReviewListResponse findReviewByExpertAndSubCategory(Long storeId, Long subCategoryId, Pageable pageable) {
+        Slice<Review> reviews = reviewRepository.findAllByStoreIdAndSubCategoryIdOrderByCreatedAt(storeId, subCategoryId, pageable);
         return ReviewListResponse.from(reviews);
     }
 

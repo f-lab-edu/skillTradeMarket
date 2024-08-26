@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("select r.expert.storeName,r.subCategory.name,r.rating,r.content,r.writer.nickname from Review r order by r.rating desc")
+    @Query("select r.store.storeName,r.subCategory.name,r.rating,r.content,r.writer.nickname from Review r order by r.rating desc")
     List<Review> findTop2ByRating();
 
     Page<Review> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
-    @Query("select r from Review r where r.expert.id = ?1 and (?2 IS NULL or r.subCategory.id = ?2) order by r.createdAt")
-    Slice<Review> findAllByExpertIdAndSubCategoryIdOrderByCreatedAt(@Param("expertId")Long expertId, @Param("subCategoryId") Long subCategoryId, Pageable pageable);
+    @Query("select r from Review r where r.store.id = ?1 and (?2 IS NULL or r.subCategory.id = ?2) order by r.createdAt")
+    Slice<Review> findAllByStoreIdAndSubCategoryIdOrderByCreatedAt(@Param("storeId")Long storeId, @Param("subCategoryId") Long subCategoryId, Pageable pageable);
 }

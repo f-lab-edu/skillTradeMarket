@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public record ReviewResponse(
         Long id,
-        String expert,
+        String store,
         String writer,
         String subItem,
         double rating,
@@ -24,12 +24,12 @@ public record ReviewResponse(
         boolean replyExisted = reviewReply != null;
 
         if (replyExisted) {
-            replyResponse = new ReplyResponse(review.getExpert().getStoreName(),
+            replyResponse = new ReplyResponse(review.getStore().getStoreName(),
                     reviewReply.getContent(),
                     reviewReply.getUpdatedAt());
         }
 
-        return new ReviewResponse(review.getId(), review.getExpert().getStoreName(), review.getWriter().getNickname(),
+        return new ReviewResponse(review.getId(), review.getStore().getStoreName(), review.getWriter().getNickname(),
                 review.getSubCategory().getName(), review.getRating(), review.getContent(), replyExisted,
                 replyResponse, review.getUpdatedAt());
     }

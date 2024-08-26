@@ -2,7 +2,7 @@ package com.flab.skilltrademarket.domain.review;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.domain.reply.Reply;
 import com.flab.skilltrademarket.domain.user.User;
 import jakarta.persistence.*;
@@ -23,7 +23,7 @@ public class Review extends BaseTimeEntity {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expert_id")
-    private Expert expert;
+    private Store store;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
@@ -43,9 +43,9 @@ public class Review extends BaseTimeEntity {
 
 
     @Builder
-    public Review(User writer, Expert expert, SubCategory subCategory, String content, int rating) {
+    public Review(User writer, Store store, SubCategory subCategory, String content, int rating) {
         this.writer = writer;
-        this.expert = expert;
+        this.store = store;
         this.subCategory = subCategory;
         this.content = content;
         this.rating = rating;

@@ -2,7 +2,7 @@ package com.flab.skilltrademarket.domain.estimate;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.global.exception.ApiException;
 import com.flab.skilltrademarket.global.exception.ExceptionCode;
 import jakarta.persistence.*;
@@ -22,8 +22,8 @@ public class ExpertEstimate extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expert_id")
-    private Expert expert;
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_estimate_id")
@@ -39,10 +39,10 @@ public class ExpertEstimate extends BaseTimeEntity {
 
     private String activityLocation;
     @Builder
-    public ExpertEstimate(Expert expert, UserEstimate userEstimate, SubCategory subCategory, int totalCost,
+    public ExpertEstimate(Store store, UserEstimate userEstimate, SubCategory subCategory, int totalCost,
                           String description, String activityLocation) {
         isValidCost(totalCost);
-        this.expert = expert;
+        this.store = store;
         this.userEstimate = userEstimate;
         this.subCategory = subCategory;
         this.totalCost = totalCost;

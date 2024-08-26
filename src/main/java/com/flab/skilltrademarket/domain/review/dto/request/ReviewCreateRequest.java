@@ -1,7 +1,7 @@
 package com.flab.skilltrademarket.domain.review.dto.request;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.domain.review.Review;
 import com.flab.skilltrademarket.domain.user.User;
 import com.flab.skilltrademarket.utils.ValidationUtil;
@@ -11,11 +11,11 @@ public record ReviewCreateRequest(
     int rating
 ) {
 
-    public static Review toEntity(ReviewCreateRequest request, User writer, Expert expert, SubCategory subCategory) {
+    public static Review toEntity(ReviewCreateRequest request, User writer, Store store, SubCategory subCategory) {
         request.validCheck();
         return Review.builder()
                 .writer(writer)
-                .expert(expert)
+                .store(store)
                 .subCategory(subCategory)
                 .content(request.content)
                 .rating(request.rating())

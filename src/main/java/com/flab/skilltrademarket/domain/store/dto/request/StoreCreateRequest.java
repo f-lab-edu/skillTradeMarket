@@ -1,19 +1,19 @@
-package com.flab.skilltrademarket.domain.expert.dto.request;
+package com.flab.skilltrademarket.domain.store.dto.request;
 
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.domain.user.User;
 import com.flab.skilltrademarket.utils.ValidationUtil;
 
-public record ExpertCreateRequest(
+public record StoreCreateRequest(
 
     String storeName,
     String description,
     Integer maxDistance,
     String location
 ) {
-    public Expert toEntity(User user) {
+    public Store toEntity(User user) {
         validCheck();
-        return Expert.builder()
+        return Store.builder()
                 .user(user)
                 .storeName(storeName)
                 .description(description)

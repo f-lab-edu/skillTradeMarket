@@ -30,7 +30,7 @@ public class Reply extends BaseTimeEntity {
     }
 
     public void validateWriter(Long writer, Review review) {
-        long expertId = review.getExpert().getId();
+        long expertId = review.getStore().getId();
 
         if (writer != expertId) {
             throw new ApiException(ExceptionCode.UNSUPPORTED_REPLIER);

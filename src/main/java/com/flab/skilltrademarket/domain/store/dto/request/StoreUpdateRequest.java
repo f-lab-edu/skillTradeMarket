@@ -1,17 +1,17 @@
-package com.flab.skilltrademarket.domain.expert.dto.request;
+package com.flab.skilltrademarket.domain.store.dto.request;
 
-import com.flab.skilltrademarket.domain.expert.Expert;
+import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.utils.ValidationUtil;
 
-public record ExpertUpdateRequest(
+public record StoreUpdateRequest(
         String storeName,
         String description,
         Integer maxDistance,
         String location
 ) {
-    public static Expert update(ExpertUpdateRequest request) {
+    public static Store update(StoreUpdateRequest request) {
         request.validCheck();
-        return Expert.builder()
+        return Store.builder()
                 .storeName(request.storeName())
                 .description(request.description())
                 .maxDistance(request.maxDistance())
