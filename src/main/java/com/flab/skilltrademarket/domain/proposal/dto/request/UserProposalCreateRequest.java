@@ -1,19 +1,19 @@
-package com.flab.skilltrademarket.domain.estimate.dto.request;
+package com.flab.skilltrademarket.domain.proposal.dto.request;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
-import com.flab.skilltrademarket.domain.estimate.UserEstimate;
+import com.flab.skilltrademarket.domain.proposal.UserProposal;
 import com.flab.skilltrademarket.domain.user.User;
 
 import java.time.LocalDateTime;
 
-public record UserEstimateCreateRequest(
+public record UserProposalCreateRequest(
         String location,
         String detailedDescription,
         LocalDateTime startDate
 ) {
-    public static UserEstimate toEntity(User user, SubCategory subCategory,
-                                                     UserEstimateCreateRequest createRequest) {
-        return UserEstimate.builder()
+    public static UserProposal toEntity(User user, SubCategory subCategory,
+                                        UserProposalCreateRequest createRequest) {
+        return UserProposal.builder()
                 .user(user)
                 .subCategory(subCategory)
                 .location(createRequest.location)

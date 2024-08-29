@@ -28,11 +28,11 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReplyRepository replyRepository;
     @Transactional
-    public void create(Long userId, Long expertId, Long subCategoryId, ReviewCreateRequest request) {
+    public void create(Long userId, Long storeId, Long subCategoryId, ReviewCreateRequest request) {
         User writer = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND));
 
-        Store store = storeRepository.findById(expertId)
+        Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_EXPERT));
 
         SubCategory subCategory = subCategoryRepository.findById(subCategoryId)

@@ -23,13 +23,13 @@ public class ReviewController {
     /**
      * 리뷰 생성
      * @param user
-     * @param expertId
+     * @param storeId
      * @param subCategoryId
      * @param request
      */
     @PostMapping("/review/{expertId}")
-    public void create(@AuthenticationUser UserDetails user, @PathVariable("expertId") Long expertId, @RequestParam("subCategoryId") Long subCategoryId, @RequestBody ReviewCreateRequest request) {
-        reviewService.create(user.id(), expertId, subCategoryId, request);
+    public void create(@AuthenticationUser UserDetails user, @PathVariable("storeId") Long storeId, @RequestParam("subCategoryId") Long subCategoryId, @RequestBody ReviewCreateRequest request) {
+        reviewService.create(user.id(), storeId, subCategoryId, request);
     }
 
     /**
@@ -46,17 +46,17 @@ public class ReviewController {
 
     /**
      * 특정 고수에 대한 리뷰 답글 전체 조회
-     * @param expertId
+     * @param storeId
      * @param subCategoryId
      * @param pageable
      * @return
      */
     @GetMapping("/review/expert")
-    public CommonResponse<ReviewListResponse> findReviewByExpert(@RequestParam("expertId") Long expertId,
+    public CommonResponse<ReviewListResponse> findReviewByExpert(@RequestParam("storeId") Long storeId,
                                                                  @RequestParam("subCategoryId") Long subCategoryId,
                                                                  @PageableDefault(sort = "updatedAt", size = 10, direction = Sort.Direction.DESC)
                                                                      Pageable pageable) {
-        return CommonResponse.success(reviewService.findReviewByExpertAndSubCategory(expertId, subCategoryId, pageable));
+        return CommonResponse.success(reviewService.findReviewByExpertAndSubCategory(storeId, subCategoryId, pageable));
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.flab.skilltrademarket.domain.estimate;
+package com.flab.skilltrademarket.domain.proposal;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
@@ -19,7 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class UserEstimate extends BaseTimeEntity {
+public class UserProposal extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -43,11 +43,11 @@ public class UserEstimate extends BaseTimeEntity {
     private String detailedDescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expert_id")
+    @JoinColumn(name = "store_id")
     private Store store;
 
     @Builder
-    public UserEstimate(User user, SubCategory subCategory, String location, String detailedDescription,LocalDateTime strDate) {
+    public UserProposal(User user, SubCategory subCategory, String location, String detailedDescription, LocalDateTime strDate) {
         isValidDate(strDate);
         this.user = user;
         this.subCategory = subCategory;

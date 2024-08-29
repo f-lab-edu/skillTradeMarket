@@ -38,7 +38,7 @@ public class StoreService {
             throw new ApiException(ExceptionCode.NO_ACCESS_EXPERT);
         }
         checkDupStoreName(storeCreateRequest.storeName());
-        Store store = storeCreateRequest.toEntity(users);
+        Store store = storeCreateRequest.toEntity(users.getId());
         storeRepository.save(store);
     }
 

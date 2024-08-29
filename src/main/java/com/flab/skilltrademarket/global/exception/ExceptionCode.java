@@ -47,7 +47,7 @@ public enum ExceptionCode {
     UNSUPPORTED_REPLIER("F003", "리뷰에 대한 답장은 고수만 가능합니다.", "리뷰에 대한 답장은 고수만 가능합니다.", HttpStatus.BAD_REQUEST),
 
     //Estimate
-    NOT_FOUND_USER_ESTIMATE("G001","찾을 수 없는 요청 견적서입니다.","찾을 수 없는 요청 견적서입니다.",HttpStatus.NOT_FOUND),
+    NOT_FOUND_USER_PROPOSAL("G001","찾을 수 없는 요청 견적서입니다.","찾을 수 없는 요청 견적서입니다.",HttpStatus.NOT_FOUND),
     COST_MUST_OVER_ZERO("G002", "비용은 0원보다 커야합니다.", "비용은 0원보다 커야합니다.", HttpStatus.BAD_REQUEST);
     private final String code;
     private final String internalMessage;
