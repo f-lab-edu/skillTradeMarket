@@ -56,4 +56,12 @@ public class ExpertBid extends BaseTimeEntity {
             throw new ApiException(ExceptionCode.COST_MUST_OVER_ZERO);
         }
     }
+
+    public void addUserProposal(UserProposal userProposal) {
+        this.userProposal = userProposal;
+    }
+
+    public void addSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
+    }
 }

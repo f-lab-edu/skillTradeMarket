@@ -7,7 +7,8 @@ import com.flab.skilltrademarket.domain.store.Store;
 public record ExpertBidCreateRequest(
         Long userProposalId,
         String description,
-        int totalCost
+        String activityLocation,
+        Integer totalCost
 
 ) {
     public static ExpertBid toEntity(
@@ -15,12 +16,16 @@ public record ExpertBidCreateRequest(
             UserProposal userProposal,
             Store store) {
 
-        return ExpertBid.builder()
+        ExpertBid expertBid = ExpertBid.builder()
                 .userProposal(userProposal)
                 .store(store)
-                .totalCost(createRequest.totalCost)
                 .description(createRequest.description)
+                .activityLocation(createRequest.activityLocation)
+                .totalCost(createRequest.totalCost)
                 .build();
+        userProposal.addExpertBid(expertBid);
+        expertBid.addSubCategory(userProposal.getSubCategory());
+        return expertBid;
     }
 }
 
