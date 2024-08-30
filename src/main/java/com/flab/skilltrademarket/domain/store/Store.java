@@ -24,11 +24,11 @@ public class Store extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-//
-//    @OneToOne(fetch = LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
-    private Long userId;
+
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "store", cascade = ALL, orphanRemoval = true)
     private List<ExpertSkill> expertSkills = new ArrayList<>();
 
@@ -44,8 +44,8 @@ public class Store extends BaseTimeEntity {
     private int reviewCount;
 
     @Builder
-    public Store(Long userId, String storeName, String description, int maxDistance, String location, double rating, int reviewCount) {
-        this.userId = userId;
+    public Store(User user, String storeName, String description, int maxDistance, String location, double rating, int reviewCount) {
+        this.user = user;
         this.storeName = storeName;
         this.description = description;
         this.maxDistance = maxDistance;

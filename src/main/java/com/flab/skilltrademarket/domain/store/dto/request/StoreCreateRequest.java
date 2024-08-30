@@ -11,10 +11,10 @@ public record StoreCreateRequest(
     Integer maxDistance,
     String location
 ) {
-    public Store toEntity(Long userId) {
+    public Store toEntity(User user) {
         validCheck();
         return Store.builder()
-                .userId(userId)
+                .user(user)
                 .storeName(storeName)
                 .description(description)
                 .maxDistance(maxDistance)
