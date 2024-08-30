@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface UserProposalRepository extends JpaRepository<UserProposal,Long> {
     List<UserProposal> findAllByUser(User user);
+
+    List<UserProposal> findByUserIdAndSubCategoryIdAndIsClosedFalse(Long userId, Long subCategoryId);
 }

@@ -5,7 +5,13 @@ import com.flab.skilltrademarket.domain.proposal.UserProposal;
 import java.util.List;
 
 public record UserProposalListResponse(
-        List<UserProposal> userProposalResponseList
+        List<UserProposalResponse> userProposalResponseList
 
 ) {
+    public static UserProposalListResponse from(List<UserProposal> userProposalResponseList) {
+        return new UserProposalListResponse(
+                userProposalResponseList.stream().map(UserProposalResponse::from).toList()
+        );
+    }
+
 }

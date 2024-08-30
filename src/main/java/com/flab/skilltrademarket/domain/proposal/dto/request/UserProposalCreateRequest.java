@@ -7,6 +7,7 @@ import com.flab.skilltrademarket.domain.user.User;
 import java.time.LocalDateTime;
 
 public record UserProposalCreateRequest(
+        Long subCategoryId,
         String location,
         String detailedDescription,
         LocalDateTime startDate

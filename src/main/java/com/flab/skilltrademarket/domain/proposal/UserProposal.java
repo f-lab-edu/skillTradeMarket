@@ -1,5 +1,6 @@
 package com.flab.skilltrademarket.domain.proposal;
 
+import com.flab.skilltrademarket.domain.bid.ExpertBid;
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
 import com.flab.skilltrademarket.domain.store.Store;
@@ -10,14 +11,20 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
+@Where(clause = "is_closed = false")
+@SQLDelete(sql = "UPDATE user_proposal SET is_closed = true, status = 'FINISHED' WHERE id = ?")
 @NoArgsConstructor(access = PROTECTED)
 public class UserProposal extends BaseTimeEntity {
 
@@ -46,6 +53,13 @@ public class UserProposal extends BaseTimeEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    @OneToMany(mappedBy = "userProposal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExpertBid> expertBidList = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.PENDING;
+
+    private boolean isClosed;
     @Builder
     public UserProposal(User user, SubCategory subCategory, String location, String detailedDescription, LocalDateTime strDate) {
         isValidDate(strDate);
@@ -61,5 +75,18 @@ public class UserProposal extends BaseTimeEntity {
         if (LocalDateTime.now().isAfter(strDate)) {
             throw new ApiException(ExceptionCode.ACCESS_DENIED);
         }
+    }
+
+    public void updateStore(Store store) {
+        this.store = store;
+    }
+
+    public void updateStatus(Status status) {
+        this.status = status;
+    }
+
+    public void addExpertBid(ExpertBid expertBid) {
+        expertBidList.add(expertBid);
+        expertBid.addUserProposal(this);
     }
 }
