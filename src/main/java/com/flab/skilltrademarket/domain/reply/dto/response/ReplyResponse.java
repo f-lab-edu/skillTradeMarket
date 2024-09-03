@@ -1,4 +1,4 @@
-package com.flab.skilltrademarket.domain.reply.dto.reponse;
+package com.flab.skilltrademarket.domain.reply.dto.response;
 
 import java.time.LocalDateTime;
 
