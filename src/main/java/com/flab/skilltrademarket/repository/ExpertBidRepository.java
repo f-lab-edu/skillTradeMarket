@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ExpertBidRepository extends JpaRepository<ExpertBid,Long> {
+public interface ExpertBidRepository extends JpaRepository<ExpertBid,Long>, CustomExpertBidRepository{
     @Query("SELECT DISTINCT e FROM ExpertBid e JOIN FETCH e.store JOIN FETCH e.userProposal")
     List<ExpertBid> findAllWithFetchJoin();
 }

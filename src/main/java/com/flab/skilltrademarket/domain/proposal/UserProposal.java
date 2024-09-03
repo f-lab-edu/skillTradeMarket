@@ -73,7 +73,7 @@ public class UserProposal extends BaseTimeEntity {
 
     private void isValidDate(LocalDateTime strDate) {
         if (LocalDateTime.now().isAfter(strDate)) {
-            throw new ApiException(ExceptionCode.ACCESS_DENIED);
+            throw new ApiException(ExceptionCode.DATE_IS_UNVAlID);
         }
     }
 

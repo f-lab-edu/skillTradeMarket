@@ -52,7 +52,8 @@ public enum ExceptionCode {
     COST_MUST_OVER_ZERO("G002", "비용은 0원보다 커야합니다.", "비용은 0원보다 커야합니다.", HttpStatus.BAD_REQUEST),
     REQUESTER_ALREADY_HAS_SUBCATEGORY("G003", "회원과 같은 분야의 서비스는 신청할 수 없습니다.", "회원과 같은 분야의 서비스는 신청할 수 없습니다.", HttpStatus.BAD_REQUEST),
     DUPLICATE_USER_PROPOSAL("G004", "중복된 요청 견적서입니다.", "중복된 요청 견적서입니다.", HttpStatus.BAD_REQUEST),
-    ALREADY_RESPONDED_PROPOSAL("G005", "이미 처리된 요청 견적서입니다.", "이미 처리된 요청 견적서입니다.", HttpStatus.BAD_REQUEST);
+    ALREADY_RESPONDED_PROPOSAL("G005", "이미 처리된 요청 견적서입니다.", "이미 처리된 요청 견적서입니다.", HttpStatus.BAD_REQUEST),
+    DATE_IS_UNVAlID("G006","요청 날짜가 오늘보다 이전입니다.","요청 날짜가 오늘보다 이전입니다.",HttpStatus.BAD_REQUEST);
     private final String code;
     private final String internalMessage;
     private final String externalMessage;
