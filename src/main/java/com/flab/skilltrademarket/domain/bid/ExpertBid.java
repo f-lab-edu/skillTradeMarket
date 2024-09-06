@@ -30,7 +30,7 @@ public class ExpertBid extends BaseTimeEntity {
     @JoinColumn(name = "user_proposal_id")
     private UserProposal userProposal;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 

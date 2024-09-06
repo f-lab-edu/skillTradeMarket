@@ -1,5 +1,7 @@
 package com.flab.skilltrademarket.repository;
 import static com.flab.skilltrademarket.domain.bid.QExpertBid.*;
+import static com.flab.skilltrademarket.domain.proposal.QUserProposal.userProposal;
+import static com.flab.skilltrademarket.domain.store.QStore.store;
 
 import com.flab.skilltrademarket.domain.bid.ExpertBid;
 import com.flab.skilltrademarket.domain.bid.dto.request.ExpertBidSearchCondition;
@@ -23,6 +25,8 @@ public class ExpertBidRepositoryImpl implements CustomExpertBidRepository{
     @Override
     public Slice<ExpertBid> findExpertBidsByAllCondition(ExpertBidSearchCondition searchCondition, Pageable pageable) {
         List<ExpertBid> results = jpaQueryFactory.selectFrom(expertBid)
+                .leftJoin(expertBid.userProposal, userProposal).fetchJoin()
+                .leftJoin(expertBid.store, store).fetchJoin()
                 .where(eqUserId(searchCondition.userId()),
                         ltExpertBidId(searchCondition.expertBidId()))
                 .orderBy(expertBid.createdAt.desc())

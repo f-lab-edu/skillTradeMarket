@@ -40,7 +40,7 @@ public class UserProposalService {
         }
     }
 
-    private UserProposal createProposal(Long userId, UserProposalCreateRequest createRequest) {
+    public UserProposal createProposal(Long userId, UserProposalCreateRequest createRequest) {
         User user = findUserById(userId);
         SubCategory subCategory = findSubCategoryById(createRequest.subCategoryId());
 
