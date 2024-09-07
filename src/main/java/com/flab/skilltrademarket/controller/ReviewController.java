@@ -27,7 +27,7 @@ public class ReviewController {
      * @param subCategoryId
      * @param request
      */
-    @PostMapping("/review/{expertId}")
+    @PostMapping("/stm/review/{expertId}")
     public void create(@AuthenticationUser UserDetails user, @PathVariable("storeId") Long storeId, @RequestParam("subCategoryId") Long subCategoryId, @RequestBody ReviewCreateRequest request) {
         reviewService.create(user.id(), storeId, subCategoryId, request);
     }
@@ -37,7 +37,7 @@ public class ReviewController {
      * @param pageable
      * @return
      */
-    @GetMapping("/review")
+    @GetMapping("/stm/review")
     public CommonResponse<ReviewListResponse> findReviewList(
             @PageableDefault(sort = "updatedAt", size = 10, direction = Sort.Direction.DESC)
             Pageable pageable){
@@ -51,7 +51,7 @@ public class ReviewController {
      * @param pageable
      * @return
      */
-    @GetMapping("/review/expert")
+    @GetMapping("/stm/review/expert")
     public CommonResponse<ReviewListResponse> findReviewByExpert(@RequestParam("storeId") Long storeId,
                                                                  @RequestParam("subCategoryId") Long subCategoryId,
                                                                  @PageableDefault(sort = "updatedAt", size = 10, direction = Sort.Direction.DESC)
@@ -64,7 +64,7 @@ public class ReviewController {
      * @param id
      * @return
      */
-    @GetMapping("/review/{id}")
+    @GetMapping("/stm/review/{id}")
     public CommonResponse<ReviewResponse> findReviewById(@PathVariable("id") Long id) {
         return CommonResponse.success(reviewService.findReviewById(id));
     }
@@ -75,7 +75,7 @@ public class ReviewController {
      * @param user
      * @param request
      */
-    @PostMapping("/review/{reviewId}/reply")
+    @PostMapping("/stm/review/{reviewId}/reply")
     public void createReply(@PathVariable("reviewId") Long reviewId, @AuthenticationUser UserDetails user, @RequestBody ReplyCreateRequest request) {
         reviewService.createReply(reviewId, user.id(), request);
     }

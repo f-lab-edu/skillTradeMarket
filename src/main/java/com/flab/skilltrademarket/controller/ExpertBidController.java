@@ -26,7 +26,7 @@ public class ExpertBidController {
      * @param user
      * @param createRequest
      */
-    @PostMapping("/expertBid")
+    @PostMapping("/stm/expertBid")
     public void create(@AuthenticationUser UserDetails user, @RequestBody ExpertBidCreateRequest createRequest) {
         expertBidService.create(user, createRequest);
 
@@ -36,13 +36,13 @@ public class ExpertBidController {
      * 모든 응답서 조회
      * @return
      */
-    @GetMapping("/expertBid")
+    @GetMapping("/stm/expertBid")
     public CommonResponse<ExpertBidListResponse> findExpertBids() {
         return CommonResponse.success(expertBidService.findExpertBids());
     }
 
-    @GetMapping("/expertBid/searchAll")
-    public CommonResponse<ExpertBidSliceListResponse> searchExpertBidsByAllConditions(@AuthenticationUser UserDetails user,  ExpertBidSearchCondition condition, @PageableDefault(page = 0, size = 10) Pageable pageable) {
+    @GetMapping("/stm/expertBid/searchAll")
+    public CommonResponse<ExpertBidSliceListResponse> searchExpertBidsByAllConditions(@AuthenticationUser UserDetails user,  ExpertBidSearchCondition condition, @PageableDefault Pageable pageable) {
         return CommonResponse.success(expertBidService.searchExpertBidsByCondition(user.id(), condition, pageable));
     }
 

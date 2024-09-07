@@ -21,7 +21,7 @@ public class UserProposalController {
      * @param storeId
      * @param createRequest
      */
-    @PostMapping("/userProposal")
+    @PostMapping("/stm/userProposal")
     public void create(@AuthenticationUser UserDetails user, @RequestParam("storeId") Long storeId, @RequestBody UserProposalCreateRequest createRequest) {
         userProposalService.create(user.id(), storeId, createRequest);
     }
@@ -31,7 +31,7 @@ public class UserProposalController {
      * @param user
      * @return
      */
-    @GetMapping("/userProposal")
+    @GetMapping("/stm/userProposal")
     public CommonResponse<UserProposalListResponse> findUserProposals(@AuthenticationUser UserDetails user) {
         return CommonResponse.success(userProposalService.findAllByUserId(user.id()));
     }
@@ -41,7 +41,7 @@ public class UserProposalController {
      * @param userProposalId
      * @return
      */
-    @GetMapping("/userProposal/{userProposalId}")
+    @GetMapping("/stm/userProposal/{userProposalId}")
     public CommonResponse<UserProposalResponse> findUserProposalByProposalId(@PathVariable Long userProposalId) {
         return CommonResponse.success(userProposalService.findByProposalId(userProposalId));
     }
@@ -51,7 +51,7 @@ public class UserProposalController {
      * @param user
      * @param userProposalId
      */
-    @DeleteMapping("/userProposal/{userProposalId}")
+    @DeleteMapping("/stm/userProposal/{userProposalId}")
     public void deleteUserProposal(@AuthenticationUser UserDetails user, @PathVariable Long userProposalId) {
         userProposalService.deleteByProposalId(user.id(), userProposalId);
     }

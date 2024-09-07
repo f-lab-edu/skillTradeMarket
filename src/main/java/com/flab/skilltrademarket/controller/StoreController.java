@@ -22,7 +22,7 @@ public class StoreController {
      * @param user
      * @param storeCreateRequest
      */
-    @PostMapping("/store")
+    @PostMapping("/stm/store")
     public void create(@AuthenticationUser UserDetails user, @RequestBody StoreCreateRequest storeCreateRequest) {
         storeService.create(user, storeCreateRequest);
     }
@@ -32,7 +32,7 @@ public class StoreController {
      * @param user
      * @param storeUpdateRequest
      */
-    @PatchMapping("/store")
+    @PatchMapping("/stm/store")
     public void update(@AuthenticationUser UserDetails user, @RequestBody StoreUpdateRequest storeUpdateRequest) {
         storeService.update(user, storeUpdateRequest);
     }
@@ -42,7 +42,7 @@ public class StoreController {
      * @param id
      * @return
      */
-    @GetMapping("/store/{id}")
+    @GetMapping("/stm/store/{id}")
     public CommonResponse<StoreResponse> findOne(@PathVariable("id") Long id) {
         return CommonResponse.success(storeService.findById(id));
     }
@@ -51,7 +51,7 @@ public class StoreController {
      * 고수 삭제
      * @param user
      */
-    @DeleteMapping("/store")
+    @DeleteMapping("/stm/store")
     public void delete(@AuthenticationUser UserDetails user) {
         storeService.delete(user);
     }
@@ -61,7 +61,7 @@ public class StoreController {
      * @param user
      * @param request
      */
-    @PostMapping("/store/subCategory")
+    @PostMapping("/stm/store/subCategory")
     public void addSubCategory(@AuthenticationUser UserDetails user, @RequestBody StoreAddSubCatRequest request) {
         storeService.addSubCategory(user, request);
     }
@@ -71,12 +71,12 @@ public class StoreController {
      * @param user
      * @return
      */
-    @GetMapping("/store/subCategory")
+    @GetMapping("/stm/store/subCategory")
     public CommonResponse<SubCategoryListResponse> getSubCategoryById(@AuthenticationUser UserDetails user) {
         return CommonResponse.success(storeService.getSubCategoryById(user.id()));
     }
 
-    @DeleteMapping("/store/subCategory")
+    @DeleteMapping("/stm/store/subCategory")
     public void deleteExpertSkill(@AuthenticationUser UserDetails user, @RequestBody StoreAddSubCatRequest request) {
         storeService.deleteExpertSkill(user, request);
     }
