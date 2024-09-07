@@ -1,7 +1,8 @@
-package com.flab.skilltrademarket.domain.estimate;
+package com.flab.skilltrademarket.domain.bid;
 
 import com.flab.skilltrademarket.domain.category.SubCategory;
 import com.flab.skilltrademarket.domain.common.BaseTimeEntity;
+import com.flab.skilltrademarket.domain.proposal.UserProposal;
 import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.global.exception.ApiException;
 import com.flab.skilltrademarket.global.exception.ExceptionCode;
@@ -16,7 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class ExpertEstimate extends BaseTimeEntity {
+public class ExpertBid extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -26,10 +27,10 @@ public class ExpertEstimate extends BaseTimeEntity {
     private Store store;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_estimate_id")
-    private UserEstimate userEstimate;
+    @JoinColumn(name = "user_proposal_id")
+    private UserProposal userProposal;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 
@@ -39,11 +40,11 @@ public class ExpertEstimate extends BaseTimeEntity {
 
     private String activityLocation;
     @Builder
-    public ExpertEstimate(Store store, UserEstimate userEstimate, SubCategory subCategory, int totalCost,
-                          String description, String activityLocation) {
+    public ExpertBid(Store store, UserProposal userProposal, SubCategory subCategory, int totalCost,
+                     String description, String activityLocation) {
         isValidCost(totalCost);
         this.store = store;
-        this.userEstimate = userEstimate;
+        this.userProposal = userProposal;
         this.subCategory = subCategory;
         this.totalCost = totalCost;
         this.activityLocation = activityLocation;
@@ -54,5 +55,13 @@ public class ExpertEstimate extends BaseTimeEntity {
         if (totalCost <= 0) {
             throw new ApiException(ExceptionCode.COST_MUST_OVER_ZERO);
         }
+    }
+
+    public void addUserProposal(UserProposal userProposal) {
+        this.userProposal = userProposal;
+    }
+
+    public void addSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
     }
 }

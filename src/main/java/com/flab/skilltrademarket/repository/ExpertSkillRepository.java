@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface ExpertSkillRepository extends JpaRepository<ExpertSkill, Long> {
 
     Optional<ExpertSkill> findByStoreAndSubCategory(Store store, SubCategory subCategory);
+
+
+    boolean existsByStoreIdAndSubCategoryId(Long storeId, Long subCategoryId);
 }

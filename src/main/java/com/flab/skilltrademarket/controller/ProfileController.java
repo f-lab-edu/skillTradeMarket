@@ -16,12 +16,12 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    @GetMapping("/user/profile")
+    @GetMapping("/stm/user/profile")
     public CommonResponse<ProfileResponse> getUserProfile(@AuthenticationUser UserDetails user) {
         return CommonResponse.success(profileService.getUserProfile(user.id()));
     }
 
-    @PatchMapping("/user/role")
+    @PatchMapping("/stm/user/role")
     public void changeRole(@AuthenticationUser UserDetails user) {
         profileService.changeRole(user.id());
     }

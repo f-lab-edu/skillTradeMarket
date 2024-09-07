@@ -1,7 +1,7 @@
 package com.flab.skilltrademarket.domain.review.dto.response;
 
 import com.flab.skilltrademarket.domain.reply.Reply;
-import com.flab.skilltrademarket.domain.reply.dto.reponse.ReplyResponse;
+import com.flab.skilltrademarket.domain.reply.dto.response.ReplyResponse;
 import com.flab.skilltrademarket.domain.review.Review;
 
 import java.time.LocalDateTime;

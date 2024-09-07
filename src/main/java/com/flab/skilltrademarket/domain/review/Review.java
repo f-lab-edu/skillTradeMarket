@@ -22,7 +22,7 @@ public class Review extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expert_id")
+    @JoinColumn(name = "store_id")
     private Store store;
 
     @OneToOne(fetch = FetchType.LAZY)

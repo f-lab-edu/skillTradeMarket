@@ -3,7 +3,7 @@ package com.flab.skilltrademarket.domain.store.dto.response;
 import com.flab.skilltrademarket.domain.review.Review;
 
 public record PopularStoreResponse(
-        String expertName,
+        String storeName,
         String skillName,
         Double rating,
         String reviewComment,
@@ -11,7 +11,7 @@ public record PopularStoreResponse(
 ) {
     public static PopularStoreResponse fromEntity(Review review) {
         return new PopularStoreResponse(
-                review.getStore().getUser().getNickname(),
+                review.getStore().getStoreName(),
                 review.getSubCategory().getName(),
                 review.getRating(),
                 review.getContent(),
