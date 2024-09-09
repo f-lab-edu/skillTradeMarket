@@ -8,12 +8,15 @@ import com.flab.skilltrademarket.domain.review.dto.response.ReviewResponse;
 import com.flab.skilltrademarket.global.security.model.UserDetails;
 import com.flab.skilltrademarket.global.security.resolver.AuthenticationUser;
 import com.flab.skilltrademarket.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
+@Tag(name = "리뷰", description = "리뷰 생성,리뷰와 답글 전체 조회, 특정 고수에 대한 리뷰 답글 전체 조회, 리뷰 아이디를 통한 단건 조회, 답글 작성 API")
 @RestController
 @RequiredArgsConstructor
 public class ReviewController {
@@ -28,6 +31,8 @@ public class ReviewController {
      * @param request
      */
     @PostMapping("/stm/review/{expertId}")
+    @Operation(summary = "리뷰 생성",description = "리뷰를 생성합니다.")
+    @ApiResponse(responseCode = "200",description = "리뷰 생성에 성공하였습니다.")
     public void create(@AuthenticationUser UserDetails user, @PathVariable("storeId") Long storeId, @RequestParam("subCategoryId") Long subCategoryId, @RequestBody ReviewCreateRequest request) {
         reviewService.create(user.id(), storeId, subCategoryId, request);
     }
@@ -38,6 +43,8 @@ public class ReviewController {
      * @return
      */
     @GetMapping("/stm/review")
+    @Operation(summary = "리뷰와 답글 전체 조회",description = "리뷰와 답글 전체 조회합니다.")
+    @ApiResponse(responseCode = "200",description = "리뷰와 답글 전체 조회에 성공하였습니다.")
     public CommonResponse<ReviewListResponse> findReviewList(
             @PageableDefault(sort = "updatedAt", size = 10, direction = Sort.Direction.DESC)
             Pageable pageable){
@@ -52,6 +59,8 @@ public class ReviewController {
      * @return
      */
     @GetMapping("/stm/review/expert")
+    @Operation(summary = "특정 고수에 대한 리뷰 답글 전체 조회",description = "특정 고수에 대한 리뷰 답글 전체 조회합니다.")
+    @ApiResponse(responseCode = "200",description = "특정 고수에 대한 리뷰 답글 전체 조회에 성공하였습니다.")
     public CommonResponse<ReviewListResponse> findReviewByExpert(@RequestParam("storeId") Long storeId,
                                                                  @RequestParam("subCategoryId") Long subCategoryId,
                                                                  @PageableDefault(sort = "updatedAt", size = 10, direction = Sort.Direction.DESC)
@@ -65,6 +74,8 @@ public class ReviewController {
      * @return
      */
     @GetMapping("/stm/review/{id}")
+    @Operation(summary = "리뷰 단건 조회",description = "리뷰 단건 조회합니다.")
+    @ApiResponse(responseCode = "200",description = "리뷰 단건 조회에 성공하였습니다.")
     public CommonResponse<ReviewResponse> findReviewById(@PathVariable("id") Long id) {
         return CommonResponse.success(reviewService.findReviewById(id));
     }
@@ -76,6 +87,8 @@ public class ReviewController {
      * @param request
      */
     @PostMapping("/stm/review/{reviewId}/reply")
+    @Operation(summary = "답글 생성",description = "답글을 생성합니다.")
+    @ApiResponse(responseCode = "200",description = "답글 생성에 성공하였습니다.")
     public void createReply(@PathVariable("reviewId") Long reviewId, @AuthenticationUser UserDetails user, @RequestBody ReplyCreateRequest request) {
         reviewService.createReply(reviewId, user.id(), request);
     }
