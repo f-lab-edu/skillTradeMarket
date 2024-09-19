@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -32,11 +34,11 @@ public class UserProposal extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 
@@ -49,11 +51,11 @@ public class UserProposal extends BaseTimeEntity {
     @Column(length = 500)
     private String detailedDescription;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToMany(mappedBy = "userProposal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userProposal", cascade = ALL, orphanRemoval = true)
     private List<ExpertBid> expertBidList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
