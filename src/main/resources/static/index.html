@@ -33,7 +33,7 @@
             pay_method: payMethod,
             merchant_uid: 'TC0ONETIME'+ new Date().getTime(), // 주문번호 생성
             name: '가전제품',
-            amount: 5000, // 결제 가격
+            amount: 35000, // 결제 가격
             buyer_name: 'test',
             buyer_tel: '010-1234-5678'
         }, function(rsp) {
@@ -41,9 +41,16 @@
                 // 결제 성공 시
                 $.ajax({
                     type: 'POST',
-                    url: '/validation/' + rsp.imp_uid
+                    url: '/stm/validation/' + rsp.imp_uid,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(order),
                 }).done(function(data) {
-                    console.log(data);
+                    console.log('data===========>', data);
                     if (order.price == data.response.amount) {
                         order.impUid = rsp.imp_uid;
                         order.merchantUid = rsp.merchant_uid;

@@ -54,7 +54,9 @@ public enum ExceptionCode {
     DUPLICATE_USER_PROPOSAL("G004", "중복된 요청 견적서입니다.", "중복된 요청 견적서입니다.", HttpStatus.BAD_REQUEST),
     ALREADY_RESPONDED_PROPOSAL("G005", "이미 처리된 요청 견적서입니다.", "이미 처리된 요청 견적서입니다.", HttpStatus.BAD_REQUEST),
     DATE_IS_UNVAlID("G006","요청 날짜가 오늘보다 이전입니다.","요청 날짜가 오늘보다 이전입니다.",HttpStatus.BAD_REQUEST),
-    PAYMENT_FAILED("P001", "주문 정보 저장에 실패했습니다.", "주문 정보 저장에 실패했습니다.", HttpStatus.BAD_REQUEST);
+    PAYMENT_FAILED("P001", "주문 정보 저장에 실패했습니다.", "주문 정보 저장에 실패했습니다.", HttpStatus.BAD_REQUEST),
+    STATUS_NOT_VALID("P002","결제를 진행할 수 없는 상태입니다.","결제를 진행할 수 없는 상태입니다.",HttpStatus.BAD_REQUEST),
+    PRICE_NOT_SAME("P003","결제가격이 다릅니다.","결제가격이 다릅니다.",HttpStatus.BAD_REQUEST);
     private final String code;
     private final String internalMessage;
     private final String externalMessage;
