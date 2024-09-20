@@ -2,9 +2,8 @@ package com.flab.skilltrademarket.controller;
 
 import com.flab.skilltrademarket.common.CommonResponse;
 import com.flab.skilltrademarket.domain.bid.dto.request.ExpertBidCreateRequest;
-import com.flab.skilltrademarket.domain.bid.dto.request.ExpertBidSearchCondition;
 import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidListResponse;
-import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidSliceListResponse;
+import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidPageResponse;
 import com.flab.skilltrademarket.global.security.model.UserDetails;
 import com.flab.skilltrademarket.global.security.resolver.AuthenticationUser;
 import com.flab.skilltrademarket.service.ExpertBidService;
@@ -12,15 +11,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "고수 응답서", description = "고수 응답서 생성 , 모든 응답서 조회, 검색으로 응답서 조회 API")
 @RestController
@@ -64,17 +57,20 @@ public class ExpertBidController {
         return CommonResponse.success(expertBidService.findExpertBids());
     }
 
-    @GetMapping("/stm/expertBid/searchAll")
+    @GetMapping("/stm/expertBid/search/{expertBidId}/{cursorId}")
     @Operation(
             summary = "응답서 검색",
             description = "응답서를 검색합니다",
             responses = {
-                @ApiResponse(responseCode = "200",description = "응답서 검색에 성공하였습니다.",content = @Content(schema = @Schema(implementation = ExpertBidSliceListResponse.class))),
+                @ApiResponse(responseCode = "200",description = "응답서 검색에 성공하였습니다.",content = @Content(schema = @Schema(implementation = ExpertBidPageResponse.class))),
                 @ApiResponse(responseCode = "404", description = "Bad Request",content = @Content(schema = @Schema(implementation = CommonResponse.class)))
             }
     )
-    public CommonResponse<ExpertBidSliceListResponse> searchExpertBidsByAllConditions(@AuthenticationUser UserDetails user, ExpertBidSearchCondition condition, @PageableDefault Pageable pageable) {
-        return CommonResponse.success(expertBidService.searchExpertBidsByCondition(user.id(), condition, pageable));
+    public CommonResponse<ExpertBidPageResponse> searchExpertBids(@AuthenticationUser UserDetails user, @PathVariable("expertBidId") Long expertBidId, @PathVariable("cursorId") Long cursorId) {
+        if (cursorId < 0) {
+            return CommonResponse.success(new ExpertBidPageResponse());
+        }
+        return CommonResponse.success(expertBidService.searchExpertBids(expertBidId, cursorId));
     }
 
 
