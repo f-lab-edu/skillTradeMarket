@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "고수 견적 응답")
 public record ExpertBidResponse(
+        @Schema(description = "견적 Id")
+        Long id,
         @Schema(description = "스토어 응답")
         StoreResponse store,
         @Schema(description = "요청서 응답")
@@ -20,10 +22,23 @@ public record ExpertBidResponse(
 ) {
     public static ExpertBidResponse from(ExpertBid expertBid) {
         return new ExpertBidResponse(
+                expertBid.getId(),
                 StoreResponse.from(expertBid.getStore()),
                 UserProposalResponse.from(expertBid.getUserProposal()),
                 expertBid.getTotalCost(),
                 expertBid.getActivityLocation(),
                 expertBid.getDescription());
+    }
+
+
+    public static ExpertBidResponse toExpertBidResponse(ExpertBidDto dto) {
+        return new ExpertBidResponse(
+                dto.expertBidId(),
+                new StoreResponse(dto.storeId(), dto.storeName(), dto.description(), dto.maxDistance(), dto.location(), dto.rating()),
+                new UserProposalResponse(dto.userProposalId(), dto.userId(), dto.subCategoryId(), dto.location(), dto.detailedDescription(), dto.startDate()),
+                dto.totalCost(),
+                dto.activityLocation(),
+                dto.description()
+        );
     }
 }

@@ -1,12 +1,12 @@
 package com.flab.skilltrademarket.service;
 
 import com.flab.skilltrademarket.domain.bid.ExpertBid;
-import com.flab.skilltrademarket.domain.bid.dto.request.ExpertBidSearchCondition;
+import com.flab.skilltrademarket.domain.bid.dto.request.ExpertBidCreateRequest;
+import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidDto;
 import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidListResponse;
-import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidSliceListResponse;
+import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidPageResponse;
 import com.flab.skilltrademarket.domain.proposal.Status;
 import com.flab.skilltrademarket.domain.proposal.UserProposal;
-import com.flab.skilltrademarket.domain.bid.dto.request.ExpertBidCreateRequest;
 import com.flab.skilltrademarket.domain.store.Store;
 import com.flab.skilltrademarket.global.exception.ApiException;
 import com.flab.skilltrademarket.global.exception.ExceptionCode;
@@ -15,8 +15,8 @@ import com.flab.skilltrademarket.repository.ExpertBidRepository;
 import com.flab.skilltrademarket.repository.StoreRepository;
 import com.flab.skilltrademarket.repository.UserProposalRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,8 +26,8 @@ public class ExpertBidService {
     private final ExpertBidRepository expertBidRepository;
     private final StoreRepository storeRepository;
     private final UserProposalRepository userProposalRepository;
+    @Transactional
     public void create(UserDetails user, ExpertBidCreateRequest createRequest) {
-
         if (!user.role().isExpert()) {
             throw new ApiException(ExceptionCode.NO_ACCESS_EXPERT);
         }
@@ -63,15 +63,20 @@ public class ExpertBidService {
     private boolean isSameBid(ExpertBid expertBid, Long userProposalId) {
         return expertBid.getUserProposal().getId().equals(userProposalId);
     }
-
+    @Transactional(readOnly = true)
     public ExpertBidListResponse findExpertBids() {
         List<ExpertBid> expertBidList = expertBidRepository.findAllWithFetchJoin();
         return ExpertBidListResponse.from(expertBidList);
     }
+    @Transactional(readOnly = true)
+    public ExpertBidPageResponse searchExpertBids(Long expertBidId, Long cursorId) {
+        List<ExpertBidDto> expertBids = expertBidRepository.findAllByExpertBidIdPage(expertBidId, cursorId);
 
-    public ExpertBidSliceListResponse searchExpertBidsByCondition(Long userId, ExpertBidSearchCondition condition, Pageable pageable) {
-        storeRepository.findByUserId(userId)
-                .orElseThrow(() -> new ApiException(ExceptionCode.NOT_FOUND_EXPERT));
-        return ExpertBidSliceListResponse.from(expertBidRepository.findExpertBidsByAllCondition(condition, pageable));
+        // 10개 이하면 다음이 존재하지 않음
+        if (expertBids.size() < 11) {
+            return new ExpertBidPageResponse(expertBids);
+        }
+        // 10개 이상이면 다음이 존재
+        return new ExpertBidPageResponse(expertBids.subList(0, 10), expertBids.get(9).expertBidId());
     }
 }

@@ -1,55 +1,50 @@
 package com.flab.skilltrademarket.repository;
-import static com.flab.skilltrademarket.domain.bid.QExpertBid.*;
-import static com.flab.skilltrademarket.domain.proposal.QUserProposal.userProposal;
-import static com.flab.skilltrademarket.domain.store.QStore.store;
 
-import com.flab.skilltrademarket.domain.bid.ExpertBid;
-import com.flab.skilltrademarket.domain.bid.dto.request.ExpertBidSearchCondition;
-import com.querydsl.core.Tuple;
+import com.flab.skilltrademarket.domain.bid.dto.response.ExpertBidDto;
+import com.flab.skilltrademarket.domain.bid.dto.response.QExpertBidDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static com.flab.skilltrademarket.domain.bid.QExpertBid.expertBid;
+import static com.flab.skilltrademarket.domain.proposal.QUserProposal.userProposal;
+import static com.flab.skilltrademarket.domain.store.QStore.store;
 
 @Repository
 @RequiredArgsConstructor
 public class ExpertBidRepositoryImpl implements CustomExpertBidRepository{
     private final JPAQueryFactory jpaQueryFactory;
 
-
     @Override
-    public Slice<ExpertBid> findExpertBidsByAllCondition(ExpertBidSearchCondition searchCondition, Pageable pageable) {
-        List<ExpertBid> results = jpaQueryFactory.selectFrom(expertBid)
-                .leftJoin(expertBid.userProposal, userProposal).fetchJoin()
-                .leftJoin(expertBid.store, store).fetchJoin()
-                .where(eqUserId(searchCondition.userId()),
-                        ltExpertBidId(searchCondition.expertBidId()))
-                .orderBy(expertBid.createdAt.desc())
-                .limit(pageable.getPageSize() + 1)
+    public List<ExpertBidDto> findAllByExpertBidIdPage(Long expertBidId, Long cursorId) {
+        QExpertBidDto expertBidFields = new QExpertBidDto(
+                expertBid.id,
+                store.id,
+                store.storeName,
+                store.maxDistance,
+                store.location,
+                store.rating,
+                userProposal.id,
+                userProposal.user.id,
+                userProposal.subCategory.id,
+                expertBid.totalCost,
+                expertBid.activityLocation,
+                expertBid.description,
+                userProposal.detailedDescription,
+                userProposal.preferredStartDate
+        );
+        return jpaQueryFactory.select(expertBidFields)
+                .from(expertBid)
+                .where(ltExpertBidId(cursorId))
+                .orderBy(expertBid.id.desc())
+                .limit(11)      // 다음 페이지 유무 확인
                 .fetch();
-        return checkLastPage(pageable, results);
     }
 
-    private Slice<ExpertBid> checkLastPage(Pageable pageable, List<ExpertBid> results) {
-        boolean hasNext = false;
-        if (results.size() > pageable.getPageSize()) {
-            hasNext = true;
-            results.remove(pageable.getPageSize());
-        }
-        return new SliceImpl<>(results, pageable, hasNext);
-    }
-
-
-    private BooleanExpression eqUserId(Long userId) {
-        return userId != null ? expertBid.userProposal.user.id.eq(userId) : null;
-    }
-
-    private BooleanExpression ltExpertBidId(Long expertBidId) {
-        return expertBidId == null ? null : expertBid.id.lt(expertBidId);
+    private BooleanExpression ltExpertBidId(Long cursorId) {
+        return cursorId != null ? expertBid.id.lt(cursorId) : null;
     }
 }
