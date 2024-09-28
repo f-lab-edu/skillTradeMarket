@@ -74,7 +74,7 @@ public class UserProposalController {
                     @ApiResponse(responseCode = "404", description = "Bad Request", content = @Content(schema = @Schema(implementation = CommonResponse.class)))
             }
     )
-    public CommonResponse<UserProposalResponse> findUserProposalByProposalId(@Parameter(description = "요청서 Id", example = "1") @PathVariable Long userProposalId) {
+    public CommonResponse<UserProposalResponse> findUserProposalByProposalId(@Parameter(description = "요청서 Id", example = "1") @PathVariable("userProposalId") Long userProposalId) {
         return CommonResponse.success(userProposalService.findByProposalId(userProposalId));
     }
 
